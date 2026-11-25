@@ -34,5 +34,5 @@ void spruce_release(spruce_pool* pool, uint32_t idx) {
 }
 
 void* spruce_get(spruce_pool* pool, uint32_t idx) {
-    return &pool->set[idx >> 16].data[idx & 0x0000FFFF];
+    return &((unsigned char*)pool->set[idx >> 16].data)[idx & 0x0000FFFF];
 }
