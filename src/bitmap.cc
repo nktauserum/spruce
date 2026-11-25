@@ -8,7 +8,7 @@ uint32_t bitmap<type>::acquire() {
     while (true) {
         uint64_t b = __atomic_load_n(&array, __ATOMIC_RELAXED);
         if (b != 0) {
-            uint64_t offset = _mm_tzcnt_64(b);
+            uint64_t offset = __builtin_ctzll(b);
             
             if (__atomic_compare_exchange_n(
                 &array, &b,
