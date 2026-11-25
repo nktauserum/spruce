@@ -5,8 +5,6 @@ using namespace spruce;
 
 template <typename type>
 uint32_t bitmap<type>::acquire() {
-    uint32_t idx;
-
     while (true) {
         uint64_t b = __atomic_load_n(&array, __ATOMIC_RELAXED);
         if (b != 0) {
@@ -17,11 +15,10 @@ uint32_t bitmap<type>::acquire() {
                 b^(1 << offset), false,
                 __ATOMIC_ACQUIRE, __ATOMIC_RELAXED
             )) 
-                return idx;
+                return offset;
         }
 
         _mm_pause();
-        continue;
     }
 }
 
