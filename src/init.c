@@ -18,3 +18,11 @@ int spruce_init(spruce_pool* pool, size_t set, size_t item) {
 
     return 1;
 }
+
+void spruce_clean(spruce_pool* pool) {
+    for (int i = 0; i < pool->size; ++i) {
+        free(pool->set[i].data);
+    }
+
+    free(pool->set);
+}
