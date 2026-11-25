@@ -1,36 +1,28 @@
 #pragma once
 
-#include <atomic>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-namespace spruce {
-    namespace {
-        template <typename type>
-        struct bitmap {
-        private:
-            alignas(64) uint64_t array;
-        public:
-            alignas(64) type*   data;
+#include <stdalign.h>
+#include <stdint.h>
+#include <stdlib.h>
 
-            uint32_t acquire();
-            void     release(uint32_t);
-            
-            bitmap();
-            ~bitmap();
-        };
-    }
+typedef struct {
+    alignas(64) uint64_t array;
+    alignas(64) void*    data;
+} __spruce_bitmap;
 
-    template <typename type>
-    class Pool {
-    private:
-        alignas(64) int           size;
-        alignas(64) bitmap<type>* set;
+typedef struct {
+    alignas(64) int              size;
+    alignas(64) __spruce_bitmap* set;
+} spruce_pool;
 
-    public:
-        uint32_t Acquire(int);
-        void     Release(uint32_t);
-        type*    Reach  (uint32_t);
+int      spruce_init   (spruce_pool*, size_t, size_t);
+uint32_t spruce_acquire(spruce_pool*, int);
+void     spruce_release(spruce_pool*, uint32_t);
+void*    spruce_get    (spruce_pool*, uint32_t);
 
-        Pool(int);
-        ~Pool();
-    };
+#ifdef __cplusplus
 }
+#endif

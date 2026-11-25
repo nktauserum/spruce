@@ -1,5 +1,5 @@
 CXX = g++
-CPPFLAGS = -Wall -Wextra -pedantic -O3 -march=native -mtune=native -DNDEBUG -Iinclude
+CPPFLAGS = -Wall -Wextra -pedantic -g -Iinclude
 CXXFLAGS = -fPIC -flto
 LDFLAGS = -shared -flto
 
