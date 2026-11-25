@@ -2,7 +2,7 @@
 using namespace spruce;
 
 template <typename type>
-Pool<type>::Pool(int size) : set{new bitmap[size]}, data{new type[size*64]} {}
+Pool<type>::Pool(int size) : set{new bitmap[size]}, data{new type[size*64]}, size{size} {}
 
 template <typename type>
 Pool<type>::~Pool() {
